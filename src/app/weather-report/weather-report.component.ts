@@ -20,7 +20,7 @@ export class WeatherReportComponent implements OnInit {
   constructor(
     private weatherService: WeatherService,
     private route: ActivatedRoute
-  ) { } 
+  ) { }
 
   ngOnInit(): void {
     this.data$ = this.route.params.pipe(
