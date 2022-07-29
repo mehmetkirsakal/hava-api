@@ -3,6 +3,7 @@ import { WeatherService } from '../weather.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, filter, concatMap, tap } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-weather-report',
@@ -19,19 +20,40 @@ export class WeatherReportComponent implements OnInit {
   constructor(
     private weatherService: WeatherService,
     private route: ActivatedRoute
-  ) { }
+  ) { } 
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.data$ = this.route.params.pipe(
-      map(params => params.locationName),
-      filter(name => !!name),
-      tap(() => {
-        this.loading = true;
-      }),
-      concatMap(name => this.weatherService.getWeatherForCity(name)),
-      tap(() => {
-        this.loading = false;
-      })
-    );
-  }
+      map(params =>params.locationName),
+      
+      
+    )
+    
+    this.weatherService.getWeatherForCity('ankara')
+      .subscribe({
+        next:(response) => {
+          console.log(response);
+          
+        }  
+      });
+      concatMap(name => this.weatherService.getWeatherForCity('istanbul'));
+    
+    }
+  //   this.data$ = this.route.params.pipe(
+  //     map(params => params.locationName),
+  //     filter(name => !!name),
+  //     tap(() => {
+  //       this.loading = true;
+  //     }),
+  //     concatMap(name => this.weatherService.getWeatherForCity(name)),
+      
+  //     tap(() => {
+  //       this.loading = false;
+  //     })
+  //   );
+  // }
+  
+
+
+  
 }

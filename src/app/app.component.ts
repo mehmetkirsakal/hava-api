@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   countries = [
     {
       name: 'Turkey',
-      cities: ['Ankara', 'İstanbul', 'İzmir','Mersin']
+      cities: ['ankara', 'istanbul', 'izmir','mersin']
     },
     {
       name: 'United States',
@@ -37,15 +37,19 @@ export class AppComponent implements OnInit, OnDestroy {
   cityControl: FormControl;
 
   cities$: Observable<string>;
+  
 
   constructor(private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit(){
+    
+    
     this.cityControl = new FormControl('');
     this.cityControl.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(value => {
         this.router.navigate([value]);
+        console.log([value])
       });
 
     this.countryControl = new FormControl('');

@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
   constructor(private http: HttpClient) { }
 
   getWeatherForCity(city: string): Observable<any> {
-    const path = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=695ed9f29c4599b7544d0db5c211d499`;
-    return this.http.get<any>(path).pipe(
-      map(data => ({
-        ...data,
-        image: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
-      })),
-      delay(500)
-    );
+    return this.http.get<any>(environment.weatherApiBaseUrl,{
+      headers: new HttpHeaders()
+      .set(environment.APIHostHeaderName,environment.APIHostHeaderValue)
+      .set(environment.APIKeyHeaderName,environment.APIKeyHeaderValue),
+      params: new HttpParams()
+      .set('data.city',city)
+    })
+
+
   }
 }
