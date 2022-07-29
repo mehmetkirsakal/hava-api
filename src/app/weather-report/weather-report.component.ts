@@ -24,7 +24,9 @@ export class WeatherReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.data$ = this.route.params.pipe(
-      map(params =>params.locationName),
+    map(params =>params.locationName),
+    concatMap(name => this.weatherService.getWeatherForCity('istanbul')),
+      
       
       
     )
