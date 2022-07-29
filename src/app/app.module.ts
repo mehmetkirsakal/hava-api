@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { MatCardModule } from '@angular/material/card';
@@ -13,6 +13,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { WeatherReportComponent } from './weather-report/weather-report.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
@@ -27,7 +29,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent, WeatherReportComponent
+    AppComponent, WeatherReportComponent, LoginComponent, HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,26 @@ const routes: Routes = [
     MatToolbarModule,
     MatFormFieldModule,
     MatSelectModule,
-    RouterModule.forRoot(routes),
+    //RouterModule.forRoot(routes),
+    RouterModule.forRoot([
+      {
+        path: 'home',
+        component: HomeComponent
+      },
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: '',
+        component: LoginComponent
+      },
+      {       
+        path: ':locationName',
+        component: WeatherReportComponent
+      },
+      
+    ]),
     MatProgressBarModule,
     HttpClientModule,
     MatButtonModule
