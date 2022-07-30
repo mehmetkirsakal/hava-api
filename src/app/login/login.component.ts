@@ -34,7 +34,12 @@ export class LoginComponent implements OnInit {
 
   }
 
-    onSubmit() {
+    onSubmit(event) {
+
+        event.preventDefault()
+        const target = event.target
+        const username = target.querySelector('#username').value
+        const password = target.querySelector('#password').value
         this.submitted = true;
         console.log("inside login submit")
         // stop here if form is invalid
@@ -43,7 +48,7 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
-        if(this.authenticationService.login(this.loginForm.username, this.f.password.value))
+        if(this.authenticationService.login(username, password))
         {
           /*Following message is displayed in console after login success
             However, angular app is not re-directing to user-list page.*/       
