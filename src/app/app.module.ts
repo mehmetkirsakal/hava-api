@@ -31,7 +31,6 @@ import { HomeComponent } from './home/home.component';
     MatToolbarModule,
     MatFormFieldModule,
     MatSelectModule,
-    //RouterModule.forRoot(routes),
     RouterModule.forRoot([
       {
         path: 'home',
