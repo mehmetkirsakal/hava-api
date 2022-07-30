@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -39,7 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
   cities$: Observable<string>;
   
 
-  constructor(private router: Router) { }
+  constructor(private router: Router  ) { }
 
   ngOnInit(){
     

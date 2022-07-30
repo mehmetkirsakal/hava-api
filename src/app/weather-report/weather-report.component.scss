@@ -1,8 +1,9 @@
-:host {
-    display: flex;
-    justify-content: center;
-    position: relative;
-}
+// :host {
+//     display: flex;
+//     justify-content: center;
+//     position: relative;
+// }
+
 
 .top-bar {
     position: absolute;
@@ -52,3 +53,19 @@ mat-card::ng-deep.mat-card-header-text {
         height: 80px;
     }
 }
+.content {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.mr {
+    margin-right: 16px;
+}
+

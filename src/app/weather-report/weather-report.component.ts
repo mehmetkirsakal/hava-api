@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../weather.service';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, filter, concatMap, tap } from 'rxjs/operators';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import { map, filter, concatMap, tap, takeUntil } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-weather-report',
@@ -12,54 +13,72 @@ import { FormControl } from '@angular/forms';
 })
 export class WeatherReportComponent implements OnInit {
   data$: Observable<any>;
+  private unsubscribe$ = new Subject<void>();
 
   today: Date = new Date();
 
   loading = false;
 
+  countries = [
+    {
+      name: 'Turkey',
+      cities: ['İstanbul', 'Ankara', 'İzmir','Bursa','Antalya','Adana','Mersin']
+    },
+    {
+      name: 'Amerika',
+      cities: ['New York', 'Chicago', 'Washington']
+    },
+    {
+      name: 'Almanya',
+      cities: ['Berlin', 'Frankfurt', 'Dortmund']
+    },
+    {
+      name: 'Rusya',
+      cities: ['Moskova', 'St. Petersburg', 'Kazan']
+    }
+  ];
+  countryControl: FormControl;
+  cityControl: FormControl;
+
+  cities$: Observable<string>;
+
+
   constructor(
     private weatherService: WeatherService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router : Router
+    
   ) { }
 
   ngOnInit(): void {
     this.data$ = this.route.params.pipe(
     map(params =>params.locationName),
     filter(name => !!name),
-    // tap(() => {
-    //   this.loading = true 
-    // }),
-    concatMap(name => this.weatherService.getWeatherForCity(name)),
-      
-      
-      
+  
+    concatMap(name => this.weatherService.getWeatherForCity(name)), 
     )
-    
-    this.weatherService.getWeatherForCity('ankara')
-      .subscribe({
-        next:(response) => {
-          console.log(response);
-          
-        }  
+    this.cityControl = new FormControl('');
+    this.cityControl.valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(value => {
+        this.router.navigate([value]);
+        console.log([value])
       });
-      concatMap(name => this.weatherService.getWeatherForCity('istanbul'));
-    
-    }
-  //   this.data$ = this.route.params.pipe(
-  //     map(params => params.locationName),
-  //     filter(name => !!name),
-  //     tap(() => {
-  //       this.loading = true;
-  //     }),
-  //     concatMap(name => this.weatherService.getWeatherForCity(name)),
-      
-  //     tap(() => {
-  //       this.loading = false;
-  //     })
-  //   );
-  // }
-  
+
+    this.countryControl = new FormControl('');
+
+    this.cities$ = this.countryControl.valueChanges.pipe(
+      map(country => country.cities)
+    );
 
 
-  
+  }
 }
+    
+    
+ 
+  
+
+
+  
+

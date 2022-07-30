@@ -16,16 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: WeatherReportComponent
-  },
-  {
-    path: ':locationName',
-    component: WeatherReportComponent
-  }
-];
+
 
 @NgModule({
   declarations: [

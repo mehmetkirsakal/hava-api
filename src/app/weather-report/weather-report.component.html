@@ -1,21 +1,53 @@
-<mat-card class="mat-elevation-z5" *ngIf="data$ | async as data">
-    <mat-progress-bar *ngIf="loading" mode="indeterminate" class="top-bar">
-    </mat-progress-bar>
-    <mat-card-header>
-        <mat-card-title>{{data.city}} Hava Durumu</mat-card-title>
-        <mat-card-subtitle>Today: {{today | date }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="flex-row">
-            <div class="temp">
-                <span class="big-text">{{data.result[0].degree | number:'0.0-0'}} C</span>
-                <span>Max </span>
-                <span>{{data.result[0].max | number: '0.0-0'}} C</span>
-            </div>
-            <div class="outlook">
-                <img [src]="data.result[0].icon" class="image" />
-                <span>{{data.result[0].description | titlecase}}</span>
-            </div>
-        </div>
-    </mat-card-content>
-</mat-card>
+<mat-toolbar color="primary">
+    HAVA DURUMU
+</mat-toolbar>
+
+<div class="content"> 
+  <div class="flex-row">
+    <mat-form-field class="mr">
+      <mat-label>Ülke Seçiniz</mat-label>
+      <mat-select [formControl]="countryControl">
+        <mat-option *ngFor="let country of countries" [value]="country">
+          {{country.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Şehir Seçiniz</mat-label>
+      <mat-select [formControl]="cityControl">
+        <mat-option *ngFor="let city of cities$ | async" [value]="city">
+          {{city}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <br />
+
+
+<div class="content">
+    <div class="flex-row">
+        <mat-card class="mat-elevation-z5" *ngIf="data$ | async as data">
+            
+            <mat-progress-bar *ngIf="loading" mode="indeterminate" class="top-bar">
+            </mat-progress-bar>
+            <mat-card-header>
+                <mat-card-title>{{data.city}} Hava Durumu</mat-card-title>
+                <mat-card-subtitle>Today: {{today | date }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="flex-row">
+                    <div class="temp">
+                        <span class="big-text">{{data.result[0].degree | number:'0.0-0'}} C</span>
+                        <span>Max </span>
+                        <span>{{data.result[0].max | number: '0.0-0'}} C</span>
+                    </div>
+                    <div class="outlook">
+                        <img [src]="data.result[0].icon" class="image" />
+                        <span>{{data.result[0].description | titlecase}}</span>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
