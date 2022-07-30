@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication.service';
-import { AlertService } from '../alert.service';
+
 
 
 
@@ -38,29 +38,28 @@ export class LoginComponent implements OnInit {
 
         event.preventDefault()
         const target = event.target
-        const username = target.querySelector('#username').value
-        const password = target.querySelector('#password').value
         this.submitted = true;
-        console.log("inside login submit")
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
-
+        
+        
+        
         this.loading = true;
-        if(this.authenticationService.login(username, password))
-        {
-          /*Following message is displayed in console after login success
-            However, angular app is not re-directing to user-list page.*/       
-          console.log("inside login success")
-          this.router.navigate([''])
+        if(this.authenticationService.login(target.querySelector('#username').value, target.querySelector('#password').value))
+        {            
+          console.log("Başarıyla giriş yapıldı.")
+          this.router.navigate(['/home'])
           this.invalidLogin = false
         }else{
-          console.log("inside login false")
+          console.log("Giriş başarısız, kontrol ediniz. (id: admin  şifre: admin)")
           this.invalidLogin = true
         }
         
 
       }
+
+  Logout(){
+    
+    this.authenticationService.logOut();
+    console.log("Çıkış yapıldı. hile yapmak yasak tekrar giriş yap")
+  }
 
 }

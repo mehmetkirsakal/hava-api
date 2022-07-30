@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-        
-        <span class="menu-spacer"></span>
         <a mat-button routerLink="/login">Login</a>
+        <span class="menu-spacer"></span>
+        <a routerLink="/login"> <button (click)="Logout()">Logout</button> </a>
     </mat-toolbar-row>
 </mat-toolbar>
 
@@ -11,5 +11,9 @@
     <input type="text" placeholder="Username" id="username">
     <input type="password" placeholder="Password" id="password">
     <input type="submit" value="Submit">
+    
 
 </form>
+
+
+

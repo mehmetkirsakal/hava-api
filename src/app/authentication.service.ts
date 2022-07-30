@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -6,25 +7,19 @@ import { Injectable } from '@angular/core';
 export class AuthenticationService {
 
   constructor() { }
-
-  login(username : string, password : string) {
-    if (username === "admin" && password === "admin") {
+  
+  login(username, password) {
+    if (username === 'admin' && password === 'admin') {
       sessionStorage.setItem('username', username)
+      sessionStorage.setItem('ApiKey',environment.APIKeyHeaderValue)
       return true;
     } else {
       return false;
     }
   }
 
-  isUserLoggedIn() {
-    let user = sessionStorage.getItem('username')
-    /* it is not printing the following message */
-    console.log("AuthenticationService :- " + user);
-    console.log(!(user === null))
-    return !(user === null)
-  }
-
+ 
   logOut() {
-    sessionStorage.removeItem('username')
+    sessionStorage.clear();
   }
 }

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../weather.service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
+import { empty, Observable, Subject } from 'rxjs';
 import { map, filter, concatMap, tap, takeUntil } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
+import { AuthenticationService } from '../authentication.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -46,23 +48,28 @@ export class WeatherReportComponent implements OnInit {
   constructor(
     private weatherService: WeatherService,
     private route: ActivatedRoute,
-    private router : Router
+    private router : Router,
+    private authenticationService:AuthenticationService,
     
   ) { }
 
   ngOnInit(): void {
-    this.data$ = this.route.params.pipe(
-    map(params =>params.locationName),
-    filter(name => !!name),
-  
-    concatMap(name => this.weatherService.getWeatherForCity(name)), 
+    if(sessionStorage.length == 0){
+      console.log("Hile yapma giriş yap")
+      this.router.navigate(['/login'])
+    }
+      
+      this.data$ = this.route.params.pipe(
+      map(params =>params.locationName),
+      filter(name => !!name),
+      concatMap(name => this.weatherService.getWeatherForCity(name)), 
     )
     this.cityControl = new FormControl('');
     this.cityControl.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(value => {
         this.router.navigate([value]);
-        console.log([value])
+        console.log("İstek başarıyla gerçekleşti")
       });
 
     this.countryControl = new FormControl('');
@@ -70,8 +77,12 @@ export class WeatherReportComponent implements OnInit {
     this.cities$ = this.countryControl.valueChanges.pipe(
       map(country => country.cities)
     );
+    
+      
 
-
+  }
+  Logout(){
+    this.authenticationService.logOut();
   }
 }
     

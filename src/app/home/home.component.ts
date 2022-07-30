@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -39,17 +40,26 @@ export class HomeComponent implements OnInit, OnDestroy {
   cities$: Observable<string>;
   
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authenticationService:AuthenticationService) { }
+
+  Logout(){
+    
+    this.authenticationService.logOut();
+  }
 
   ngOnInit(){
-    
+    if(sessionStorage.length == 0){
+      console.log("Hile yapma giriş yap")
+      this.router.navigate(['/login'])
+    }
     
     this.cityControl = new FormControl('');
     this.cityControl.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(value => {
         this.router.navigate([value]);
-        console.log([value])
       });
 
     this.countryControl = new FormControl('');
@@ -58,6 +68,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       map(country => country.cities)
     );
   }
+  
 
   ngOnDestroy() {
     this.unsubscribe$.next();
