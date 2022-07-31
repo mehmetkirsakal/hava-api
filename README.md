@@ -2,6 +2,8 @@
 
 [Docker Hub linkimden](https://hub.docker.com/u/mehmetkirsakal) projenin dockerlaştırılmış haline ulaşabilirsiniz. 
 
+(Siteye giriş yapmak için username ve password kısmı admin olması gerekli. isternirse authentication kısmından giriş bilgileri değiştirilebilir)
+
 Docker hub tan direk indirmek için:
 
 ```docker
