@@ -8,9 +8,11 @@
 
 <h2>Login</h2>
 <form (submit)="onSubmit($event)">
+    <p *ngIf="signInError && signInError.length>0 " style="color: Darkred; font-size: small"> {{signInError}} </p>
     <input type="text" placeholder="Username" id="username">
     <input type="password" placeholder="Password" id="password">
     <input type="submit" value="Submit">
+    
     
 
 </form>

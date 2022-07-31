@@ -18,13 +18,16 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   invalidLogin = false
+  signInError: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-) {}
+) {
+  
+}
 
     ngOnInit() {
       this.loginForm = this.formBuilder.group({
@@ -50,6 +53,7 @@ export class LoginComponent implements OnInit {
           this.invalidLogin = false
         }else{
           console.log("Giriş başarısız, kontrol ediniz. (id: admin  şifre: admin)")
+          this.signInError = 'Kullanıcı adı Şifre hatalı. İpucu: (admin, admin)'
           this.invalidLogin = true
         }
         
@@ -59,6 +63,7 @@ export class LoginComponent implements OnInit {
   Logout(){
     
     this.authenticationService.logOut();
+    this.signInError = ''
     console.log("Çıkış yapıldı. hile yapmak yasak tekrar giriş yap")
   }
 
