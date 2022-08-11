@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Component, NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { MatCardModule } from '@angular/material/card';
@@ -15,12 +15,17 @@ import { WeatherReportComponent } from './weather-report/weather-report.componen
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { AlertService } from './Services/alert.service';
+import { AuthenticationService } from './Services/authentication.service';
+import { WeatherService } from './Services/weather.service';
+import { LoginGuardService } from './Services/login-guard.service';
+import { HeaderComponent } from './header/header.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent, WeatherReportComponent, LoginComponent, HomeComponent
+    AppComponent, WeatherReportComponent, LoginComponent, HomeComponent, HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +39,8 @@ import { HomeComponent } from './home/home.component';
     RouterModule.forRoot([
       {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
+        canActivate: [LoginGuardService]
       },
       {
         path: 'login',
@@ -46,15 +52,21 @@ import { HomeComponent } from './home/home.component';
       },
       {       
         path: ':locationName',
-        component: WeatherReportComponent
+        component: WeatherReportComponent,
+        canActivate: [LoginGuardService]
       },
+      {
+        path: '**',
+        redirectTo: "",
+        pathMatch: "full"
+      }
       
     ]),
     MatProgressBarModule,
     HttpClientModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [AlertService,AuthenticationService,WeatherService,LoginGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

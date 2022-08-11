@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { AuthenticationService } from '../authentication.service';
+import { Router} from '@angular/router';
+import { FormGroup} from '@angular/forms';
+import { AuthenticationService } from '../Services/authentication.service';
 
 
 
@@ -18,8 +17,6 @@ export class LoginComponent implements OnInit {
   signInError: string;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
 ) {
@@ -34,9 +31,9 @@ export class LoginComponent implements OnInit {
 
         event.preventDefault()
         const target = event.target
-        
-             
-        if(this.authenticationService.login(target.querySelector('#username').value, target.querySelector('#password').value))
+        this.authenticationService.login(target.querySelector('#username').value, target.querySelector('#password').value)
+           
+        if(this.authenticationService.isLoggedIn())
         {            
           console.log("Başarıyla giriş yapıldı.")
           this.router.navigate(['/home'])
@@ -49,12 +46,5 @@ export class LoginComponent implements OnInit {
         
 
       }
-
-  Logout(){
-    
-    this.authenticationService.logOut();
-    this.signInError = ''
-    console.log("Çıkış yapıldı. hile yapmak yasak tekrar giriş yap")
-  }
 
 }

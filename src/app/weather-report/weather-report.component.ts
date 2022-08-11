@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherService } from '../weather.service';
-import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
-import { empty, Observable, Subject } from 'rxjs';
+import { WeatherService } from '../Services/weather.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 import { map, filter, concatMap, tap, takeUntil } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-import { AuthenticationService } from '../authentication.service';
-import { environment } from 'src/environments/environment';
+import { AuthenticationService } from '../Services/authentication.service';
 
 
 @Component({
@@ -15,30 +14,14 @@ import { environment } from 'src/environments/environment';
 })
 export class WeatherReportComponent implements OnInit {
   data$: Observable<any>;
+  countries= this.weatherService.countries
   private unsubscribe$ = new Subject<void>();
 
   today: Date = new Date();
 
   loading = false;
-
-  countries = [
-    {
-      name: 'Turkey',
-      cities: ['İstanbul', 'Ankara', 'İzmir','Bursa','Antalya','Adana','Mersin']
-    },
-    {
-      name: 'Amerika',
-      cities: ['New York', 'Chicago', 'Washington']
-    },
-    {
-      name: 'Almanya',
-      cities: ['Berlin', 'Frankfurt', 'Dortmund']
-    },
-    {
-      name: 'Rusya',
-      cities: ['Moskova', 'St. Petersburg', 'Kazan']
-    }
-  ];
+  
+  
   countryControl: FormControl;
   cityControl: FormControl;
 
@@ -52,12 +35,8 @@ export class WeatherReportComponent implements OnInit {
     private authenticationService:AuthenticationService,
     
   ) { }
-
+    
   ngOnInit(): void {
-    if(sessionStorage.length == 0){
-      console.log("Hile yapma giriş yap")
-      this.router.navigate(['/login'])
-    }
       
       this.data$ = this.route.params.pipe(
       map(params =>params.locationName),

@@ -13,27 +13,6 @@ import { takeUntil, map } from 'rxjs/operators';
 export class AppComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
-
-
-  countries = [
-    {
-      name: 'Turkey',
-      cities: ['İstanbul', 'Ankara', 'İzmir','Bursa','Antalya','Adana','Mersin']
-    },
-    {
-      name: 'Amerika',
-      cities: ['New York', 'Chicago', 'Washington']
-    },
-    {
-      name: 'Almanya',
-      cities: ['Berlin', 'Frankfurt', 'Dortmund']
-    },
-    {
-      name: 'Rusya',
-      cities: ['Moskova', 'St. Petersburg', 'Kazan']
-    }
-  ];
-
   countryControl: FormControl;
   cityControl: FormControl;
 

@@ -1,0 +1,8 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <a mat-button routerLink="/login" style="border-style:outset; margin-right: 1%;">Login</a>
+        <a mat-button routerLink="/home" style="border-style:outset">Hava Durumu</a>
+        <span class="menu-spacer"></span>
+        <a routerLink="/login"> <button (click)="auth.logOut()">Logout</button> </a>
+    </mat-toolbar-row>
+</mat-toolbar>
