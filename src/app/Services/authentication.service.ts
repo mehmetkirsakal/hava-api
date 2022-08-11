@@ -13,7 +13,6 @@ export class AuthenticationService {
     if (username === 'admin' && password === 'admin') {
       sessionStorage.setItem('username', username)
       sessionStorage.setItem('ApiKey',environment.APIKeyHeaderValue)
-      console.log("login")
       this.auth = true;
     } else {
       this.auth = false;
@@ -26,7 +25,6 @@ export class AuthenticationService {
 
   isLoggedIn(){
     if (this.auth === true){
-      console.log("isloggedin")
       return true;
     } else {
       return false;
